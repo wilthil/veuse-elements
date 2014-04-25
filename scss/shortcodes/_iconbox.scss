@@ -1,0 +1,147 @@
+/* Iconbox */
+
+.widget_veuse_infobox_widget { margin-bottom: 10px !important;}
+
+.veuse-iconbox {
+
+	* { box-sizing: border-box; }
+
+	@include clearfix();
+	@include border-radius(2px);
+	position: relative;
+	margin-bottom: 20px;
+	min-height:64px;
+	padding:20px 30px;
+	
+	.icon { 
+	
+		display: block;
+		text-align: center; 
+		
+		i.fa	 { margin:16px 0 0; line-height: 1; color: #252525; font-size: 48px; display: inline-block;}
+		
+	}
+	.content { 
+		
+		text-align: center;
+		display: block; 
+		a { text-decoration: none;}
+		
+		h4 { line-height: 1.2em;  }
+		p { line-height: 1.4em; }
+		
+		a.veuse-button {margin-bottom: 10px;}
+	}
+	
+	
+	
+	&.veuse-iconbox-white {
+				
+		background: #fff;
+		border: 1px solid #e4e4e4;
+		
+		.icon { 
+			
+			i.fa { }
+			
+		}
+		h4 a{ }
+		p { color:#606060;}
+		
+	}
+	
+	&.veuse-iconbox-dark {
+		
+		background: $black;
+		
+		.icon {
+			i.fa	 { color: #fff; }			
+		}
+		h4 a{ color: #fff;}
+		p { color:lighten($black, 40%);}
+		.veuse-button { background: #fff;  }
+		
+	}
+	
+	&.veuse-iconbox-green {
+		
+		background: $lightgreen;
+		
+		.icon { 
+			i.fa	 { color: #fff; }			
+		}
+		h4 a{ color: #fff;}
+		p { color:darken($lightgreen, 30%);}
+		.veuse-button { background: #fff;  }
+		
+	}
+	
+	&.veuse-iconbox-yellow {
+		
+		background: $yellow;
+		
+		.icon { 
+			i.fa	 { color: #fff; }			
+		}
+		h4 a{ color: #fff;}
+		p { color:darken($yellow, 30%);}
+		.veuse-button { background: #fff;  }
+		
+	}
+	
+	&.veuse-iconbox-orange {		
+
+		background: $orange;
+		
+		.icon { 
+			i.fa	 { color: #fff; }			
+		}
+		h4 a{ color: #fff;}
+		p { color:darken($orange, 30%);}
+		.veuse-button { background: #fff;  }
+		
+	}
+	
+	&.veuse-iconbox-silver {
+		
+		background: $silver;
+		
+		.icon {
+			i.fa	 { color: #252525; }			
+		}
+		h4 a { }
+		p { color:darken($silver, 40%);}
+		.veuse-button {   }
+		
+	}
+	
+	&.veuse-iconbox-lightblue {
+		
+		background: $lightblue;
+		
+		.icon {
+			i.fa	 { color: #fff; }			
+		}
+		h4 a{ color: #fff;}
+		p { color:darken($lightblue, 40%);}
+		.veuse-button { background: #fff;  }
+		
+	}
+	
+	&.veuse-iconbox-blue {
+		
+		background: $blue;
+		
+		.icon { 
+			i.fa	 { color: #fff; }			
+		}
+		h4 a{ color: #fff;}
+		p { color:lighten($blue, 30%);}
+		.veuse-button { background: #fff;  }
+		
+	}
+	
+	
+}
+
+

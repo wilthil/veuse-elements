@@ -1,0 +1,85 @@
+
+
+.widget_veuse_tabs_widget {
+	
+	margin-bottom: 0 !important;
+}
+
+.veuse-toggle { 
+	margin: 0 0 4px 0; 
+	border: 1px solid #e4e4e4;
+	background: #fafafa;
+	@include border-radius(2px);
+	
+	.veuse-toggle-title {
+		
+		display: block;
+		padding: 15px 10px 15px 15px; 	
+		cursor: pointer;
+		outline: none;
+		position: relative;
+		font-weight: bold;
+		line-height: 1;
+		
+		
+		
+		i { 
+	      	position: absolute;
+	      	top:50%;	
+	      	margin-top: -6px; 
+	      	left:20px;
+	  	}
+      
+      
+	  	&.active { background: #fff;}
+	  	
+	  	.veuse-toggle-title:hover { border: 1px solid #c5c5c5; }
+	
+	  	&.veuse-toggle-icon { padding-left: 45px;}
+	  	
+	  	
+	  	&::after {
+		  	
+		  	content:'\f107';
+			font-family: FontAwesome !important;
+			position: absolute;
+			font-weight: 400 !important;
+			right: 15px;
+			top:50%;
+			margin-top: -7px;
+			font-size: 14px;
+		  	
+		  	
+	  	}
+	  	
+	  	
+	  	&.active::after {
+		  	
+		  	content:'\f106';	  	
+		  	
+	  	}
+	  	
+	  	
+	}
+}
+.veuse-toggle-inner {
+	padding: 0px 15px 15px 15px;
+	border-top: none;
+	display: none;
+	line-height: inherit;
+	background: #fff;
+	
+	p:last-child { margin-bottom: 0;}
+}
+
+
+
+
+.veuse-toggle .ui-state-active .ui-icon { background: url(images/toggles/toggle-open.png) no-repeat; }
+
+
+/* Clearfix */
+.zilla-clearfix:before,
+.zilla-clearfix:after { content:""; display:table; }
+.zilla-clearfix:after { clear: both; }
+.zilla-clearfix { zoom:1; /* For IE 6/7 (trigger hasLayout) */ }
