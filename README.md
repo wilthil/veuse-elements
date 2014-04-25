@@ -1,7 +1,7 @@
-Veuse Uikit
+Veuse Elements
 ===========
 
-Veuse Uikit has a myriad of useful shortcodes and widgets for your website. It is especially made to be used with <a href="http://wordpress.org/plugins/siteorigin-panels/">Page Builder plugin</a> by SiteOrigin.
+Veuse Elements has a myriad of useful shortcodes and widgets for your website. It is especially made to be used with <a href="http://wordpress.org/plugins/siteorigin-panels/">Page Builder plugin</a> by SiteOrigin.
 
 <b>Included widgets and shortcodes</b>
 - Alerts
@@ -14,7 +14,8 @@ Veuse Uikit has a myriad of useful shortcodes and widgets for your website. It i
 - Featured page
 - Post grid widget
 - Posts widget
-- Postslider
+- Postsliders
+- Image sliders
 - Progressbars
 - Tabs
 - Testimonials
@@ -24,5 +25,5 @@ Veuse Uikit has a myriad of useful shortcodes and widgets for your website. It i
 
 
 
-See <a href="https://github.com/veuse/veuse-uikit/wiki">wiki</a> for full list of shortcodes and usage instructions
+See <a href="https://github.com/veuse/veuse-elements/wiki">wiki</a> for full list of shortcodes and usage instructions
 
