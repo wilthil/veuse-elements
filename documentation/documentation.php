@@ -12,13 +12,13 @@
 			
 		<div id="veuse-documentation-wrapper" style="padding:20px 0; max-width:800px;">	
 			<div class="icon32" id="icon-options-general"><br></div>
-		<h2> <?php _e('Documentation','veuse-portfoliodocumentation');?></h2>
+		<h2> <?php _e('Documentation','veuse-elements');?></h2>
 		
 			<?php
 		
 		$docpath = '/documentation';
 		
-		if ( isset ( $_GET['tab'] ) ) $this->veuse_uikit_documentation_tabs($_GET['tab']); else $this->veuse_uikit_documentation_tabs('intro'); ?>
+		if ( isset ( $_GET['tab'] ) ) $this->veuse_elements_documentation_tabs($_GET['tab']); else $this->veuse_elements_documentation_tabs('intro'); ?>
 		
 		<div id="veuse-documentation-wrapper" style="padding:20px 0; max-width:800px;">	
 			

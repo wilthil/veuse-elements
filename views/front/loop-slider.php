@@ -1,8 +1,6 @@
-<div class="flexslider-wrapper">
 
-	<div id="featured" class="flexslider veuse-slider">
 
-		<ul class="slides">
+		<ul class="veuse-slider">
 		<?php
 
 		$counter = 0;
@@ -27,66 +25,49 @@
 				<?php if($link):?></a><?php endif;?>
 				<?php if($caption || $description):?>
 
-					<div class="flex-caption">
-						<div class="caption-inner <?php echo $position;?>">
+					<div class="slide-caption">
+						<div class="slide-inner-caption">
+							<div>
 						<?php if($caption):?><h3><span><?php echo $caption;?></span></h3><?php endif;?>
 						<!--<?php if($subcaption):?><h2 class="subheader"><?php echo $subcaption;?></h2><?php endif;?>-->
-						<?php if($description):?><?php echo '<p><span>'.do_shortcode($description).'</span></p>';?><?php endif;?>
+						<?php if($description):?><p><?php echo do_shortcode($description);?></p><?php endif;?>
 						
 						<?php //if($link && $buttontext):?>
 						<!--<a href="<?php echo $link;?>" class="slide-link"><?php echo $buttontext;?></a>-->
 						<?php //endif;?>
-						</div>
+						</div></div>
 					</div>
 				<?php endif;?>
 				
 			</li>
 		<?php endwhile; ?>
 	</ul>
-</div>
-</div>
-<script type="text/javascript" charset="utf-8">
-	
-	
-		jQuery(window).load(function($) { 
-			
-		jQuery(".veuse-slider").flexslider({
+
+	<script>
 		
-				easing: 'swing',
-				directionNav: <?php echo $directionnav;?>,
-				controlNav: <?php echo $controlnav;?>,
-				animation: "<?php echo $animation;?>",
-				slideshowSpeed: <?php echo $speed;?>,
-				slideshow: <?php echo $slideshow;?>,
-				pauseOnHover: true,
-				smoothHeight: false,
-				
-				start: function(slider) {
-				
-			        jQuery('.flex-active-slide').find('.flex-caption h3').delay(0).animate({'opacity': 1,'left': '0px'},300,'swing'); 
-			        jQuery('.flex-active-slide').find('.flex-caption p').delay(0).animate({'opacity': 1,'right': '0px'},300,'swing');
-			        
-			   
-			      },
-				  
-				before: function(slider) { 
-					jQuery('.flex-active-slide').find('.flex-caption h3').css({ 'opacity': 0, 'left': '-600px' }); 
-					jQuery('.flex-active-slide').find('.flex-caption p').css({ 'opacity': 0, 'right': '-600px' }); 
-					 
-									}, 
-				after: function(slider) { 
-					
-					jQuery('.flex-active-slide').find('.flex-caption h3').delay(0).animate({'opacity': 1,'left': '0px'},300, 'swing');
-					jQuery('.flex-active-slide').find('.flex-caption p').delay(0).animate({'opacity': 1,'right': '0px'},300, 'swing');
-					
-				}   
-			});
+	jQuery(document).ready(function(){
+		
+		jQuery(".veuse-slider").owlCarousel({
+		 
+		      navigation : true, // Show next and prev buttons
+		      slideSpeed : 300,
+		      paginationSpeed : 400,
+		      singleItem:true,
+		      autoHeight : false,
+			  transitionStyle:"fade"
+		 
+		      // "singleItem:true" is a shortcut for:
+		      // items : 1, 
+		      // itemsDesktop : false,
+		      // itemsDesktopSmall : false,
+		      // itemsTablet: false,
+		      // itemsMobile : false
+		 
+		  });
+		
 	});
-
-	
-	
-
 		
-		
-</script>
+	
+	</script>
+
 

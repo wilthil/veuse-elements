@@ -29,7 +29,7 @@ class VeuseTabWidget extends WP_Widget {
 		//if ( ! empty( $title ) )
 			//echo $before_title . $title . $after_title;
 
-			echo do_shortcode('[veuse_tab title="'.$title.'" icon="'.$tab_icon .'"]'. $tab_content.'[/veuse_tab]');
+			echo do_shortcode('[veuse_horisontaltab title="'.$title.'" icon="'.$tab_icon .'" is_widget="true"]'. $tab_content.'[/veuse_horisontaltab]');
 			
 		
 		echo $after_widget;

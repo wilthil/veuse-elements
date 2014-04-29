@@ -2,6 +2,15 @@
  * 	Core Owl Carousel CSS File
  *	v1.3.2
  */
+ 
+ 
+/* TwentyTwelve fix */
+
+.owl-carousel {
+	
+	ul, li { list-style: none;}
+	li { padding: 0; margin: 0;}
+}
 
 /* clearfix */
 

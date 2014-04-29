@@ -1,7 +1,32 @@
 <?php 
 
-function veuse_uikit_register_shortcodes(){
+
+
+
+function veuse_elements_register_shortcodes(){
 	
+	
+	
+	/* Blockquote
+	================================================  */
+	
+	function veuse_blockquote( $atts, $content = null ) {
+
+		 extract(shortcode_atts(array(
+					'style' => '',
+					
+		 ), $atts));
+
+			ob_start();
+			require(veuse_uikit_locate_part('blockquote'));
+			$content = ob_get_contents();
+			ob_end_clean();
+	
+			return $content;
+
+	}
+	
+	add_shortcode("veuse_blockquote", "veuse_blockquote");
 	
 	/* Veuse Slider
 	================================================  */
@@ -817,12 +842,13 @@ function veuse_uikit_register_shortcodes(){
 	/* Tab
 	================================================  */
 	
-	if (!function_exists('veuse_tab')) {
-		function veuse_tab( $atts, $content = null ) {
+	if (!function_exists('veuse_horisontaltab')) {
+		function veuse_horisontaltab( $atts, $content = null ) {
 		    extract(shortcode_atts(array(
-				'title'    	 => 'Title goes here',
-				'icon'		 => '',
-				'state'		=> ''
+				'title'    	=> 'Title goes here',
+				'icon'		=> '',
+				'state'		=> '',
+				'is_widget'	=> 'false'
 		    ), $atts));
 		    
 		    if(!empty($icon)) $iconclass = 'veuse-tab-icon'; else $iconclass = '';
@@ -838,7 +864,7 @@ function veuse_uikit_register_shortcodes(){
 			
 			
 		}
-		add_shortcode('veuse_tab', 'veuse_tab');
+		add_shortcode('veuse_horisontaltab', 'veuse_horisontaltab');
 	}
 	
 
@@ -848,9 +874,10 @@ function veuse_uikit_register_shortcodes(){
 	if (!function_exists('veuse_verticaltab')) {
 		function veuse_verticaltab( $atts, $content = null ) {
 		    extract(shortcode_atts(array(
-				'title'    	 => 'Title goes here',
-				'icon'		 => '',
-				'state'		=> ''
+				'title'    	=> 'Title goes here',
+				'icon'		=> '',
+				'state'		=> '',
+				'is_widget'	=> 'false'
 		    ), $atts));
 		    
 		    if(!empty($icon)) $iconclass = 'veuse-verticaltab-icon'; else $iconclass = '';
@@ -866,6 +893,23 @@ function veuse_uikit_register_shortcodes(){
 		}
 		add_shortcode('veuse_verticaltab', 'veuse_verticaltab');
 	}
+	
+	
+	/* Wrapper */
+	
+	if (!function_exists('veuse_tabs')) {
+		
+		function veuse_tabs( $atts, $content = null ) {
+			
+			return '<div class="veuse-tab-wrapper">'.do_shortcode($content).'</div>';
+			
+		}
+		
+		add_shortcode('veuse_tabs', 'veuse_tabs');
+	}
+
+	
+	
 
 	
 	/* Iconbox 
@@ -1011,14 +1055,14 @@ function veuse_uikit_register_shortcodes(){
 
 	/* Gist shortcode */
 
-	function veuse_gist_shortcode( $atts ) {
+	function veuse_gist( $atts ) {
 	   extract(shortcode_atts(array(
 		   'id' => '',
 		   'file' => ''
 	   ), $atts));
 	   return '<script src="https://gist.github.com/'.$id.'.js?file='.$file.'"></script>';
 		}
-	add_shortcode('gist', 'veuse_gist_shortcode');
+	add_shortcode('veuse_gist', 'veuse_gist');
 
 
 	/* Nav-menu */
@@ -1223,5 +1267,5 @@ if(!function_exists('veuse_section')){
 
 } // veuse_register_shortcodes
 
-add_action('plugins_loaded','veuse_uikit_register_shortcodes');
+add_action('plugins_loaded','veuse_elements_register_shortcodes');
 ?>

@@ -29,7 +29,7 @@ class VeuseVerticaltabWidget extends WP_Widget {
 		//if ( ! empty( $title ) )
 			//echo $before_title . $title . $after_title;
 
-			echo do_shortcode('[veuse_verticaltab title="'.$title.'" icon="'.$tab_icon .'"]'. $tab_content.'[/veuse_verticaltab]');
+			echo do_shortcode('[veuse_verticaltab title="'.$title.'" icon="'.$tab_icon .'" is_widget="true"]'. $tab_content.'[/veuse_verticaltab]');
 			
 		
 		echo $after_widget;

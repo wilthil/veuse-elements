@@ -13,6 +13,7 @@ GitHub Plugin URI: https://github.com/veuse/veuse-elements
 
 
 // Setup filters
+/*
 add_filter('wp_editor_widget_content', 'wptexturize');
 add_filter('wp_editor_widget_content', 'convert_smilies');
 add_filter('wp_editor_widget_content', 'convert_chars');
@@ -20,6 +21,7 @@ add_filter('wp_editor_widget_content', 'wpautop');
 add_filter('wp_editor_widget_content', 'shortcode_unautop');
 add_filter('wp_editor_widget_content', 'prepend_attachment');
 add_filter('wp_editor_widget_content', 'do_shortcode', 11);
+*/
 
 class VeuseElements {
 
@@ -31,16 +33,13 @@ class VeuseElements {
 		$this->pluginURI  = plugin_dir_url(__FILE__) ;
 		$this->pluginPATH = plugin_dir_path(__FILE__) ;
 		
-		add_action('wp_enqueue_scripts', array(&$this,'veuse_uikit_enqueue_styles'), 100);
-		add_action('admin_enqueue_scripts', array(&$this,'veuse_uikit_enqueue_admin_script'));
-		add_action('plugins_loaded', array(&$this,'veuse_uikit_load_textdomain'));
-		
+		add_action('wp_enqueue_scripts', array(&$this,'veuse_elements_enqueue_styles'), 100);
+		add_action('admin_enqueue_scripts', array(&$this,'veuse_elements_enqueue_admin_script'));
+		add_action('plugins_loaded', array(&$this,'veuse_elements_load_textdomain'));
 		add_action('admin_head', array(&$this, 'widgets_admin_page'), 100);		
-		
-		add_action( 'admin_menu', array(&$this,  'register_menu_page' ),11);
-		
-		
-		
+		add_action('admin_menu', array(&$this,  'register_menu_page' ),11);
+		add_action('parent_file', array(&$this,'veuse_tax_menu_correction'));
+				
 		/* Veuse Slider */
 		require $this->pluginPATH . 'includes/veuse-slider.php';	
 		
@@ -50,14 +49,21 @@ class VeuseElements {
 		/* Include widgets */
 		require 'shortcodes.php';
 		
+		/* Meta boxes */
+		require_once $this->pluginPATH . 'views/back/meta-panels/slider-meta.php';
+		require_once $this->pluginPATH . 'views/back/meta-panels/priceitem-meta.php';
+		
 		/* Include widgets */
+		require 'views/back/widgets/blockquote-widget.php';
 		require 'views/back/widgets/page-widget.php';
 		require 'views/back/widgets/image-widget-2.php';
+		require 'views/back/widgets/callout-widget.php';
 		require 'views/back/widgets/download-widget.php';
 		require 'views/back/widgets/divider-widget.php';		
-		require 'views/back/widgets/callout-widget.php';
+		require 'views/back/widgets/heading-widget.php';
 		require 'views/back/widgets/toggle-widget.php';
 		require 'views/back/widgets/tab-widget.php';
+		require 'views/back/widgets/gist-widget.php';
 		require 'views/back/widgets/verticaltab-widget.php';
 		require 'views/back/widgets/alert-widget.php';
 		require 'views/back/widgets/button-widget.php';
@@ -73,10 +79,9 @@ class VeuseElements {
 		/* Add theme support */
 		add_post_type_support('page', 'excerpt'); // Enable excerpts on pages
 		
-		require_once $this->pluginPATH . 'views/back/meta-panels/slider-meta.php';
-		require_once $this->pluginPATH . 'views/back/meta-panels/priceitem-meta.php';
 		
-	
+		
+		
 	}
 	
 	
@@ -84,37 +89,47 @@ class VeuseElements {
 
 	function register_menu_page(){
 	     
-	     add_menu_page( 'Veuse Uikit Settings', 'Veuse Uikit', 'edit_posts', 'veuse-uikit', array(&$this, 'add_settings_page'), 'dashicons-desktop' , '99' );
-	     add_submenu_page( 'veuse-uikit' , 'Slideshows', 'Slideshows', 'edit_posts', 'edit.php?post_type=veuse_slider', '');
-		 //add_submenu_page( 'veuse-uikit' , 'Pricetables', 'Pricetables', 'edit_posts', 'edit-tags.php?taxonomy=pricetable', '');
-	     add_submenu_page( 'veuse-uikit' , 'Pricetable', 'Pricetable', 'edit_posts', 'edit.php?post_type=priceitem', '');  
-	     add_submenu_page( 'veuse-uikit' , 'Documentation', 'Documentation', 'edit_posts', 'veuse-uikit-documentation', array(&$this, 'add_documentation_page'));
+	     add_menu_page( 'Elements Settings', 'Elements', 'edit_posts', 'veuse-elements', array(&$this, 'add_settings_page'), 'dashicons-desktop' , '99' );
+	     add_submenu_page( 'veuse-elements' , 'Slideshows', 'Slideshows', 'edit_posts', 'edit.php?post_type=veuse_slider', '');
+		 add_submenu_page( 'veuse-elements' , 'Pricetables', 'Pricetables', 'edit_posts', 'edit-tags.php?taxonomy=pricetable', '');
+		 add_submenu_page( 'veuse-elements' , 'Price items', 'Price items', 'edit_posts', 'edit.php?post_type=priceitem', '');
+	     add_submenu_page( 'veuse-elements' , 'Documentation', 'Documentation', 'edit_posts', 'veuse-elements-documentation', array(&$this, 'add_documentation_page'));
 	     
 	      //add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
 	}
+	
+	// highlight the proper top level menu
+	function veuse_tax_menu_correction($parent_file) {
+		global $current_screen;
+		$taxonomy = $current_screen->taxonomy;
+		if ($taxonomy == 'pricetable' )
+			$parent_file = 'veuse-elements';
+		return $parent_file;
+	}
+	
 	
 	function get_documentation_tabs(){
 	
 		 $tabs = array( 
 	    	
-	    	'intro' 		=> __('Intro','veuse-uikit'), 
-	    	'slideshow' 	=> __('Slideshows','veuse-uikit'), 
-	    	'pricetable'	=> __('Pricetables','veuse-uikit'),
-	    	'shortcodes'	=> __('Shortcodes','veuse-uikit'),
+	    	'intro' 		=> __('Intro','veuse-elements'), 
+	    	'slideshow' 	=> __('Slideshows','veuse-elements'), 
+	    	'pricetable'	=> __('Pricetables','veuse-elements'),
+	    	'shortcodes'	=> __('Shortcodes','veuse-elements'),
 	    	
 	    	);
 	    	
 	    return $tabs;
 	}
 	
-	function veuse_uikit_documentation_tabs( $current = 'intro' ) {
+	function veuse_elements_documentation_tabs( $current = 'intro' ) {
 
 	    $tabs = $this->get_documentation_tabs();  
 	     
 	    echo '<h3 class="nav-tab-wrapper" style="padding-left:0; border-bottom:0;">';
 	    foreach( $tabs as $tab => $name ){
 	        $class = ( $tab == $current ) ? ' nav-tab-active' : '';
-	        echo "<a class='nav-tab$class' style='padding-top:6px; margin:0px -1px -1px 0; border:1px solid #ccc;' href='?page=veuse-uikit-documentation&tab=$tab'>$name</a>";
+	        echo "<a class='nav-tab$class' style='padding-top:6px; margin:0px -1px -1px 0; border:1px solid #ccc;' href='?page=veuse-elements-documentation&tab=$tab'>$name</a>";
 	
 	    }
 	    echo '</h3>';
@@ -146,19 +161,19 @@ class VeuseElements {
 	
 	/* Enqueue scripts */
 	
-	function veuse_uikit_enqueue_styles() {
+	function veuse_elements_enqueue_styles() {
 
-		wp_register_style( 'veuse-uikit-styles',  $this->pluginURI . 'assets/css/veuse-uikit.css', array(), '', 'screen' );
-		wp_enqueue_style ( 'veuse-uikit-styles' );
+		wp_register_style( 'veuse-elements-styles',  $this->pluginURI . 'assets/css/veuse-elements.css', array(), '', 'screen' );
+		wp_enqueue_style ( 'veuse-elements-styles' );
 		
 		wp_register_style( 'font-awesome',  $this->pluginURI  . 'assets/css/font-awesome.css', array(), '', 'all' );
 		wp_enqueue_style ( 'font-awesome' );
 		
-		wp_register_style( 'flexslider-css',  $this->pluginURI . 'assets/css/flexslider.css', array(), '', 'screen' );
-	    wp_enqueue_style ( 'flexslider-css' );
+		//wp_register_style( 'flexslider-css',  $this->pluginURI . 'assets/css/flexslider.css', array(), '', 'screen' );
+	    //wp_enqueue_style ( 'flexslider-css' );
 		
 	
-		wp_enqueue_script('veuse_uikit_js', $this->pluginURI  . 'assets/js/veuse-uikit.js', array('jquery'), '', false);
+		wp_enqueue_script('veuse_elements_js', $this->pluginURI  . 'assets/js/veuse-elements.js', array('jquery'), '', false);
 		
 		wp_enqueue_script('owl', $this->pluginURI . 'assets/js/owl.carousel.min.js', array('jquery'), '', true);
 		wp_enqueue_script('flexslider', $this->pluginURI . 'assets/js/jquery.flexslider-min.js', array('jquery'), '', true);
@@ -169,7 +184,7 @@ class VeuseElements {
 	
 	/* Enqueue scripts */
 	
-	function veuse_uikit_enqueue_admin_script() {
+	function veuse_elements_enqueue_admin_script() {
 	
 		wp_enqueue_script( 'jquery-ui-sortable' );
 	
@@ -188,7 +203,7 @@ class VeuseElements {
 				
         wp_enqueue_script('media-upload');
 		
-		wp_enqueue_script('veuse_uikit-admin-js', $this->pluginURI  . 'assets/js/veuse-uikit-admin.js', array('jquery'), '', true);
+		wp_enqueue_script('veuse_elements-admin-js', $this->pluginURI  . 'assets/js/veuse-elements-admin.js', array('jquery'), '', true);
 		
 		
 		//wp_register_script('wp-editor-widget-js', $this->pluginURI  . 'assets/js/parallax-widget.js', array('jquery'), '', true);
@@ -204,8 +219,8 @@ class VeuseElements {
 	/* Localization
 	============================================= */
 	
-	function veuse_uikit_load_textdomain() {
-	    load_plugin_textdomain('veuse-uikit', false, dirname(plugin_basename(__FILE__)) . '/languages');
+	function veuse_elements_load_textdomain() {
+	    load_plugin_textdomain('veuse-elements', false, dirname(plugin_basename(__FILE__)) . '/languages');
 	    
 	    
 	}
@@ -217,7 +232,7 @@ class VeuseElements {
 	function widgets_admin_page() {
 		?>
 		<div id="wp-editor-widget-container" style="display: none;">
-			<a class="close" href="javascript:WPEditorWidget.hideEditor();" title="<?php esc_attr_e('Close', 'veuse-uikit'); ?>"><span class="icon"></span></a>
+			<a class="close" href="javascript:WPEditorWidget.hideEditor();" title="<?php esc_attr_e('Close', 'veuse-elements'); ?>"><span class="icon"></span></a>
 			<div class="editor">
 				<?php
 				$settings = array(
@@ -226,7 +241,7 @@ class VeuseElements {
 				wp_editor('', 'wp-editor-widget', $settings);
 				?>
 				<p>
-					<a href="javascript:WPEditorWidget.updateWidgetAndCloseEditor(true);" class="button button-primary"><?php _e('Save and close', 'veuse-uikit'); ?></a>
+					<a href="javascript:WPEditorWidget.updateWidgetAndCloseEditor(true);" class="button button-primary"><?php _e('Save and close', 'veuse-elements'); ?></a>
 				</p>
 			</div>
 		</div>
@@ -237,7 +252,7 @@ class VeuseElements {
 	
 }
 
-$uikit = new VeuseElements;
+$elements = new VeuseElements;
 
 
 /* Include github updater */
@@ -255,8 +270,8 @@ function veuse_uikit_locate_part($file) {
 	
 	/* Check stylesheet directory */
 	
-	if ( file_exists( get_stylesheet_directory().'/veuse-uikit/'. $file .'.php'))
-	   	$filepath = get_stylesheet_directory().'/veuse-uikit/'. $file .'.php';
+	if ( file_exists( get_stylesheet_directory().'/veuse-elements/'. $file .'.php'))
+	   	$filepath = get_stylesheet_directory().'/veuse-elements/'. $file .'.php';
 	
 	if ( file_exists( get_stylesheet_directory().'/'. $file .'.php'))
 	   	$filepath = get_stylesheet_directory().'/'. $file .'.php';

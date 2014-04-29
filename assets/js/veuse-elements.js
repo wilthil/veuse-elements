@@ -124,7 +124,7 @@
 	};
 	
 	
-	$.fn.veuseVerticaltab = function(optios) {
+	$.fn.veuseVerticaltab = function(options) {
 	
 		var defaults = {
 			speed: 2000
@@ -143,6 +143,7 @@
 		$('<ul class="verticaltab-navigation"></ul>').insertBefore('.widget_veuse_verticaltab_widget:first');
 		
 		var widgetCount = $('.widget_veuse_verticaltab_widget').parent().find('.widget').length;
+		console.log(widgetCount);
 		var tabwidgetCount = $('.widget_veuse_verticaltab_widget').parent().find('.widget_veuse_verticaltab_widget').length;
 		var tabcount = widgetCount - tabwidgetCount + 1;
 		var tabContent;

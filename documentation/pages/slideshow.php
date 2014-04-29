@@ -1,10 +1,10 @@
 	<h1>Slideshows</h1>
-			<h4>Here you find instructions on how to create slideshows with Veuse Uikit. For more in-depth info, please visit http://veuse.com/support.</h4>
+			<h4>Here you find instructions on how to create slideshows with Elements. For more in-depth info, please visit http://veuse.com/support.</h4>
 			<hr>
 			
 			<h3>1: Creating slideshows</h3>
 			<ol>
-				<li>Go to Veuse Uikit &raquo; Slideshows</li>
+				<li>Go to Elements &raquo; Slideshows</li>
 				<li>Click on "Add New Slideshow"</li>
 				<li>Give the slideshow a title</li>
 				<li>Click on the Add Slide button to create a slide</li>

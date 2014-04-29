@@ -110,9 +110,9 @@ class VeusePricetables {
 				"hierarchical" => true,
 				"labels" => $taxlabels,
 				"rewrite" => true,
-				"show_ui" => true,
+				"show_ui" => false,
 				'show_in_nav_menus' => false,
-				'public' => true,
+				'public' => false,
 				'show_in_menu' => true
 				)
 			);
