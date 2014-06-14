@@ -7,6 +7,113 @@ function veuse_elements_register_shortcodes(){
 	
 	
 	
+	/* Testimonial slider
+	================================================  */
+	
+	function veuse_testimonialslider( $atts, $content = null ) {
+
+		extract(shortcode_atts(array(
+			
+			'title' => '',
+			'testimonials'	=> ''
+				
+		), $atts));
+		
+			
+		ob_start();
+		require(veuse_uikit_locate_part('loop-testimonialslider'));
+		$content = ob_get_contents();
+		ob_end_clean();
+				
+		return $content;
+
+	}
+	
+	add_shortcode("veuse_testimonialslider", "veuse_testimonialslider");
+	
+	
+	
+	/* Modal box
+	================================================  */
+	
+	function veuse_modal( $atts, $content = null ) {
+
+		extract(shortcode_atts(array(
+			
+			'title' => '',
+			'icon'	=> ''
+				
+		), $atts));
+		
+			
+		ob_start();
+		require(veuse_uikit_locate_part('modal'));
+		$content = ob_get_contents();
+		ob_end_clean();
+				
+		return $content;
+
+	}
+	
+	add_shortcode("veuse_modal", "veuse_modal");
+	
+		
+	/* Box / containers
+	================================================  */
+	
+	function veuse_box( $atts, $content = null ) {
+
+		extract(shortcode_atts(array(
+				'classes'			=> '',
+				'color' 			=> '',
+				'background_color'  => '',
+				'border_color'		=> '',
+				'border_width'		=> '',
+				'border_radius'		=> '',
+				'padding_top'		=> '',
+				'padding_right'		=> '',
+				'padding_bottom'	=> '',
+				'padding_left'		=> '',
+				'margin_top'		=> '',
+				'margin_right'		=> '',
+				'margin_bottom'		=> '',
+				'margin_left'		=> ''
+				
+		), $atts));
+		
+		$styles = array();
+		
+		if(!empty($background_color)) 	$styles[] = 'background-color:' . $background_color.';';
+		if(!empty($border_color)) 		$styles[] = 'border-color:' . $border_color.';';
+		if(!empty($border_width)) 		$styles[] = 'border-width:' . $border_width .'px;';
+		
+		if(!empty($padding_top)) 		$styles[] = 'padding-top:' . $padding_top .'px;';
+		if(!empty($padding_right)) 		$styles[] = 'padding-right:' . $padding_right .'px;';
+		if(!empty($padding_bottom)) 	$styles[] = 'padding-bottom:' . $padding_bottom .'px;';
+		if(!empty($padding_left)) 		$styles[] = 'padding-left:' . $padding_left .'px;';
+		
+		if(!empty($margin_top)) 		$styles[] = 'margin-top:' . $margin_top .'px;';
+		if(!empty($margin_right)) 		$styles[] = 'margin-right:' . $margin_right .'px;';
+		if(!empty($margin_bottom)) 		$styles[] = 'margin-bottom:' . $margin_bottom .'px;';
+		if(!empty($margin_left)) 		$styles[] = 'margin-left:' . $margin_left .'px;';
+		
+		$styles_list = implode(' ', $styles);
+				
+				
+		ob_start();
+		require(veuse_uikit_locate_part('box'));
+		$content = ob_get_contents();
+		ob_end_clean();
+		
+		unset($styles_list);
+		
+		return $content;
+
+	}
+	
+	add_shortcode("veuse_box", "veuse_box");
+	
+	
 	/* Blockquote
 	================================================  */
 	
@@ -271,18 +378,38 @@ function veuse_elements_register_shortcodes(){
 	if(!function_exists('veuse_button')){
 		function veuse_button( $atts, $content = null ) {
 			extract(shortcode_atts(array(
-					'href' => '#',
-					'text' => 'Button text',
-					'size' => 'small',
-					'color' => 'primary',
-					'style' => '',
-					'align' => '',
-					'target' => '',
-					'width' => '',
-					'icon' => '',
-					'bevel' => ''
+					'href' 		=> '#',
+					'text' 		=> 'Button text',
+					'size' 		=> 'small',
+					'color' 	=> '',
+					'style' 	=> 'primary',
+					'align' 	=> '',
+					'target' 	=> '_self',
+					'width' 	=> '',
+					'icon' 		=> '',
+					'bevel' 		=> '',
+					'background_color'	=> '',
+					'border_radius'	=> '',
+					'border_width'	=> '',
+					'border_color'	=> '',
+					'classes'		=> '',
 		    ), $atts));
-
+		    
+		    
+		    
+		    !empty($classes) ? $classes = $classes : $classes = '';
+		    
+		    
+		    $styles = array();
+		    
+		    if(!empty($border_radius)) 		$styles[] = 'border-radius:' . $border_radius.'px;';
+			if(!empty($border_width)) 		$styles[] = 'border-width:' . $border_width.'px;';
+			if(!empty($border_color)) 		$styles[] = 'border-color:' . $border_color.';';
+			if(!empty($background_color)) 	$styles[] = 'background-color:' . $background_color .';';
+			if(!empty($color)) 				$styles[] = 'color:' . $color .';';
+			
+			$styles_list = 'style="'.implode(' ', $styles).'"';
+			
 		    if($icon)
 		    $icon_str = '<i class="fa fa-'.$icon.'"></i>';
 		    else
@@ -291,12 +418,19 @@ function veuse_elements_register_shortcodes(){
 			if($bevel == true) $bevel = 'bevel'; else $bevel = '';
 
 		    if(is_numeric($href)){
-		    $btnurl = get_permalink($href);
+		    	$btnurl = get_permalink($href);
 		    }else{
-		    $btnurl = $href;
+		    	$btnurl = $href;
 		    }
-			$out =  '<a href="'.$btnurl.'" class="veuse-button '.$size.' '.$align.' '.$color.' '.$style.' '.$bevel.'" target="'.$target.'">'.$icon_str.' '.$text.'</a>';
-
+		    
+		    
+		    ob_start();
+			require(veuse_uikit_locate_part('button'));
+			$out = ob_get_contents();
+			ob_end_clean();
+		    
+			unset($styles_list);
+			
 			return $out;
 		}
 
@@ -416,7 +550,7 @@ function veuse_elements_register_shortcodes(){
 		    
 		   
 	    		
-			return '<br style="margin-bottom:'.$size.'px;" />';
+			return '<div class="veuse-gap" style="height:'.$size.'px !important;"></div>';
 		
 		}
 
@@ -479,6 +613,29 @@ function veuse_elements_register_shortcodes(){
 	}
 	
 	add_shortcode("veuse_divider", "veuse_divider");
+	
+	
+	/* Ruler 
+	================================================  */
+	
+	function veuse_ruler($atts, $content = null){
+		
+		extract(shortcode_atts(array(
+			'width' => '',
+			'border_width'	=> '3',
+			'border_color'	=> '#252525'
+			
+			), $atts));
+			
+			
+				   
+		    $output = '<hr style="border:0px solid; border-top-width:'.$border_width.'px; width:'.$width.'; border-color:'.$border_color.'; ">';
+			
+			return $output;
+
+	}
+	
+	add_shortcode("veuse_ruler", "veuse_ruler");
 
 	
 	/* Featured page 
@@ -725,7 +882,7 @@ function veuse_elements_register_shortcodes(){
 			'categories'	=> '',
 			'perpage'		=> '',
 			'order'			=> 'DESC',
-			'orderby'		=> 'title',
+			'orderby'		=> 'date',
 			'width'			=> 'width',
 			'height'		=> 'height',
 			'grid'			=> '3',
@@ -749,7 +906,8 @@ function veuse_elements_register_shortcodes(){
 	        	'order' => $order,
 	        	'orderby' 	=> $orderby,
 	        	'category_name' => $categories,
-	        	'post__in'  => $sticky
+	        	'post__in'  => $sticky,
+	        	'ignore_sticky_posts' => 1
 	        	)
         	);
 			
@@ -1105,7 +1263,7 @@ function veuse_elements_register_shortcodes(){
 		extract(shortcode_atts(array(
 
 				'type' 			=> '',
-				'size' 			=> 'small',
+				'size' 			=> 'small', // small, large, 
 				'color' 		=> '',
 				'style' 		=> '', // sircle, ring, square
 				'link' 			=> '',
@@ -1205,11 +1363,12 @@ function veuse_elements_register_shortcodes(){
 
 		function veuse_column( $atts, $content = null ) {
 			extract(shortcode_atts(array(
-	        'small' => '',
-	        'large' => '',
+	        'small' => '12',
+	        'medium' => '12',
+	        'large' => '12',
 	        'visibility' => ''
 	          ), $atts));
-		   return '<div class="small-'. $small.' large-' . $large . ' ' . $visibility . ' columns">'. wpautop( do_shortcode($content) ) . '</div>';
+		   return '<div class="small-'. $small.' medium-'. $medium.'  large-' . $large . ' ' . $visibility . ' columns">'. wpautop( do_shortcode($content) ) . '</div>';
 		}
 
 		add_shortcode('veuse_column', 'veuse_column');
@@ -1240,28 +1399,29 @@ function veuse_elements_register_shortcodes(){
 }
 
 
-if(!function_exists('veuse_section')){
-
-	function veuse_section( $atts, $content = null ) {
-
-		extract(shortcode_atts(array(
-			'title' => '',
-		), $atts));
-
-		$out = '<section class="section">';
-		$out.= '<p class="title"><a href="#">'.$title.'</a></p>';
-		$out.= '<div class="content" data-section-content>';
-      	$out .= wpautop(do_shortcode($content));
-		$out .= '</div></section>';
-
-		return $out;
-
+	if(!function_exists('veuse_section')){
+	
+		function veuse_section( $atts, $content = null ) {
+	
+			extract(shortcode_atts(array(
+				'title' => '',
+			), $atts));
+	
+			$out = '<section class="section">';
+			$out.= '<p class="title"><a href="#">'.$title.'</a></p>';
+			$out.= '<div class="content" data-section-content>';
+	      	$out .= wpautop(do_shortcode($content));
+			$out .= '</div></section>';
+	
+			return $out;
+	
+		}
+	
+		add_shortcode('section', 'veuse_section');
 	}
 
-	add_shortcode('section', 'veuse_section');
-}
 
-
+	
 
 
 

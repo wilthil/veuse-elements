@@ -1,29 +1,53 @@
-
-/* Button widget */
-
-.widget_veuse_button_widget {
+@mixin veuse-button-base() {
 	
-	// The widget container
+	position: relative;
+	text-decoration: none;
+	display: inline-block;
+	padding: 8px 12px;
+	margin-bottom: 20px;
+	text-align: center;
 	
+}
+
+
+@mixin veuse-button-color($background, $color, $radius) {
+	
+	@include border-radius($radius);	
+	//@include box-shadow(0px 2px 0px darken($background, 10%));
+	
+	color: $color;
+	background: $background;
+	
+	&:hover {
+		background: lighten($background, 5%);
+		color:lighten($background, 40%);	
+	}
+	
+	&:active {
+	    @include box-shadow(0px 0px 0px darken($background,5%));
+	    position: relative;
+	    
+	}
+
 }
 
 /* Buttons */
 
 a.veuse-button {
-	
+
+	@include veuse-button-base();
+	@include veuse-button-color($primary-color, $color:#fff, $radius:$buttonradius);
+		
 	/* Global styles here */
 	box-sizing: border-box !important;
 	display: inline-block;
 	line-height: 13px;
 	//background: #252525;
-	border:1px solid rgba(0,0,0,0.05);
-	color: #252525;
-	padding:12px 14px;
+	//border:0px solid;
+	color: #fff;
 	font-size: 13px;
-	margin-bottom: 20px;
-	@include border-radius(2px);
+	//@include border-radius(2px);
 	text-decoration: none;
-	text-transform: uppercase;
 	font-weight: bold;
 	letter-spacing: 0.03em;
 	
@@ -58,6 +82,22 @@ a.veuse-button {
 	&.justify { width: 100%;}
 	
 	
+	
+	&.transparent {
+		background: transparent;
+	}
+	
+	&.frame {
+		background: transparent;
+		border-width:2px;
+		
+	}
+	
+	&.radius {
+		@include border-radius(3px);
+		
+	}
+	
 	/* Colors */
 
 }
@@ -69,51 +109,10 @@ a.veuse-button {
 
 
 
-@mixin veuse-button-base() {
-	
-	position: relative;
-	text-decoration: none;
-	display: inline-block;
-	padding: 8px 12px;
-	margin-bottom: 20px;
-	text-align: center;
-	-webkit-transition: all .1s ease;
-	-moz-transition: all .1s ease;
-	-ms-transition: all .1s ease;
-	-o-transition: all .1s ease;
-	transition: all .1s ease;
-	
-}
 
-
-@mixin veuse-button-color($background, $color, $radius) {
-	
-	@include border-radius($radius);	
-	//@include box-shadow(0px 2px 0px darken($background, 10%));
-	
-	color: $color;
-	background: $background;
-	
-	&:hover {
-		background: lighten($background, 5%);
-		color:lighten($background, 40%);	
-	}
-	
-	&:active {
-	    @include box-shadow(0px 0px 0px darken($background,5%));
-	    position: relative;
-	    top: 2px;
-	}
-
-}
-
+/*
 a.veuse-button {
-	
-	@include veuse-button-base();
-	@include veuse-button-color($primary-color, $color:#fff, $radius:$buttonradius);
-	
-	
-	/* Sizes */
+
 	
 	&.button-small { 
 		font-size: 13px;
@@ -130,7 +129,7 @@ a.veuse-button {
 		}
 	
 
-}
+}*/
 
 	/* Colors */
 	

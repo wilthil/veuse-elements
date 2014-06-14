@@ -1,0 +1,16 @@
+.column-wrapper {
+	
+	margin:0 -20px;
+	display: block;
+	@include clearfix();
+	
+}
+
+.one-half {
+	
+	width:50%;
+	float: left;
+	display: block;
+	padding:0 20px;
+	
+}

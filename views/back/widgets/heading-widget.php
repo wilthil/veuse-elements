@@ -21,11 +21,14 @@ class VeuseHeadingWidget extends WP_Widget {
 		
 
 		if ( isset( $instance[ 'heading_size' ] ) ) $heading_size = $instance[ 'heading_size' ];	else $heading_size = '';
+		if ( isset( $instance[ 'heading_textalign' ] ) ) $heading_textalign = $instance[ 'heading_textalign' ];	else $heading_textalign = '';
+		if ( isset( $instance[ 'heading_texttransform' ] ) ) $heading_texttransform = $instance[ 'heading_texttransform' ];	else $heading_texttransform = '';
+		if ( isset( $instance[ 'heading_decore' ] ) ) $heading_decore = $instance[ 'heading_decore' ];	else $heading_decore = '';
 		
 		
 		echo $before_widget;
 		
-		echo '<'.$heading_size.'>'.$title.'</'.$heading_size.'>';
+		echo '<'.$heading_size.' class="veuse-heading '.$heading_textalign.' '.$heading_texttransform.' '.$heading_decore.'">'.$title.'</'.$heading_size.'>';
 		//echo do_shortcode('[veuse_heading icon="'.$heading_icon .'" color="'.$heading_color.'" ]'.$title.'[/veuse_heading]');
 		echo $after_widget;
 	}
@@ -37,7 +40,9 @@ class VeuseHeadingWidget extends WP_Widget {
 				
 		$instance['title'] = strip_tags( $new_instance['title'] );
 		$instance['heading_size'] = strip_tags( $new_instance['heading_size'] );
-		
+		$instance['heading_textalign'] = strip_tags( $new_instance['heading_textalign'] );
+		$instance['heading_texttransform'] = strip_tags( $new_instance['heading_texttransform'] );
+		$instance['heading_decore'] = strip_tags( $new_instance['heading_decore'] );
 
 		return $instance;
 	}
@@ -49,6 +54,9 @@ class VeuseHeadingWidget extends WP_Widget {
 		
 		if ( isset( $instance[ 'title' ] ) ) $title = $instance[ 'title' ];	else $title = __( '', 'veuse-uikit' );
 		if ( isset( $instance[ 'heading_size' ] ) ) $heading_size = $instance[ 'heading_size' ];	else $heading_size = '';
+		if ( isset( $instance[ 'heading_textalign' ] ) ) $heading_textalign = $instance[ 'heading_textalign' ];	else $heading_textalign = '';
+		if ( isset( $instance[ 'heading_texttransform' ] ) ) $heading_texttransform = $instance[ 'heading_texttransform' ];	else $heading_texttransform = '';
+		if ( isset( $instance[ 'heading_decore' ] ) ) $heading_decore = $instance[ 'heading_decore' ];	else $heading_decore = '';
 		?>
 
 		<p>
@@ -58,7 +66,7 @@ class VeuseHeadingWidget extends WP_Widget {
 					
 		
 		<p>
-		<label for="<?php echo $this->get_field_id( 'heading_size' ); ?>"><?php _e( 'Heading size:' ); ?></label>
+		<label style="min-width:120px; display:inline-block" for="<?php echo $this->get_field_id( 'heading_size' ); ?>"><?php _e( 'Heading size:' ); ?></label>
 		
 		<select id="<?php echo $this->get_field_id( 'heading_size' ); ?>" name="<?php echo $this->get_field_name( 'heading_size' ); ?>">
 		
@@ -68,6 +76,42 @@ class VeuseHeadingWidget extends WP_Widget {
 			<option value="h4"  <?php selected( $heading_size, 'h4' , true); ?>><?php _e('Heading 4','veuse-uikit');?></option>
 			<option value="h5"  <?php selected( $heading_size, 'h5' , true); ?>><?php _e('Heading 5','veuse-uikit');?></option>
 			<option value="h6"  <?php selected( $heading_size, 'h6' , true); ?>><?php _e('Heading 6','veuse-uikit');?></option>
+		
+		</select>
+		</p>
+		
+		<p>
+		<label style="min-width:120px; display:inline-block" for="<?php echo $this->get_field_id( 'heading_textalign' ); ?>"><?php _e( 'Text alignmen:' ); ?></label>
+		
+		<select id="<?php echo $this->get_field_id( 'heading_textalign' ); ?>" name="<?php echo $this->get_field_name( 'heading_textalign' ); ?>">
+		
+			<option value="left"  <?php selected( $heading_textalign, 'left' , true); ?>><?php _e('Left','veuse-uikit');?></option>
+			<option value="center"  <?php selected( $heading_textalign, 'center' , true); ?>><?php _e('Center','veuse-uikit');?></option>
+			<option value="right"  <?php selected( $heading_textalign, 'right' , true); ?>><?php _e('Right','veuse-uikit');?></option>
+		
+		</select>
+		</p>
+		
+		<p>
+		<label style="min-width:120px; display:inline-block" for="<?php echo $this->get_field_id( 'heading_texttransform' ); ?>"><?php _e( 'Text transform:' ); ?></label>
+		
+		<select id="<?php echo $this->get_field_id( 'heading_texttransform' ); ?>" name="<?php echo $this->get_field_name( 'heading_texttransform' ); ?>">
+		
+			<option value=""><?php _e('Normal','veuse-uikit');?></option>
+			<option value="uppercase-text"  <?php selected( $heading_texttransform, 'uppercase-text' , true); ?>><?php _e('Uppercase','veuse-uikit');?></option>
+		
+		</select>
+		</p>
+		
+		<p>
+		<label style="min-width:120px; display:inline-block" for="<?php echo $this->get_field_id( 'heading_size' ); ?>"><?php _e( 'Heading size:' ); ?></label>
+		
+		<select id="<?php echo $this->get_field_id( 'heading_decore' ); ?>" name="<?php echo $this->get_field_name( 'heading_decore' ); ?>">
+		
+			<option value="sidelines"  <?php selected( $heading_decore, 'sidelines' , true); ?>><?php _e('Lines on sides','veuse-uikit');?></option>
+			<option value="underline"  <?php selected( $heading_decore, 'underline' , true); ?>><?php _e('Underline','veuse-uikit');?></option>
+			
+			
 		
 		</select>
 		</p>

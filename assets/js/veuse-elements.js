@@ -4,6 +4,7 @@
 	
 	$(document).ready(function(){
 	
+		$(document).veuseModal({ size: 'large' });
 		$(document).veuseToggle({ speed: 300 });
 		$(document).veuseAccordion({ speed: 300 });
 		$(document).veuseVerticaltab({ speed: 300 });
@@ -59,6 +60,37 @@
 		}, function(){
 			$(this).toggleClass('active').next(':visible').slideUp(options.speed);
 		});
+	
+	}
+	
+	$.fn.veuseModal = function(options) {
+	
+		var defaults = {
+			size: 'normal'
+		}
+			
+		var options = $.extend({}, defaults,options);
+			
+		$('a[data-veuse-modal]').click(function() {
+			$(this).next().addClass('veuse-modal-open veuse-modal' + options.size);
+			return false;
+		});
+		
+		
+		$('a.veuse-modal-close').click(function(e) {
+			$(this).parent().parent().removeClass('veuse-modal-open veuse-modal' + options.size);
+			return false;
+		});
+
+		$('.veuse-modal').click(function(e) {
+			$(this).removeClass('veuse-modal-open veuse-modal' + options.size);
+			return false;
+		});
+				
+		$('.veuse-modal-inner').click(function(e) {
+		  e.stopPropagation();
+		});
+	
 	
 	}
 	
@@ -143,7 +175,7 @@
 		$('<ul class="verticaltab-navigation"></ul>').insertBefore('.widget_veuse_verticaltab_widget:first');
 		
 		var widgetCount = $('.widget_veuse_verticaltab_widget').parent().find('.widget').length;
-		console.log(widgetCount);
+		//console.log(widgetCount);
 		var tabwidgetCount = $('.widget_veuse_verticaltab_widget').parent().find('.widget_veuse_verticaltab_widget').length;
 		var tabcount = widgetCount - tabwidgetCount + 1;
 		var tabContent;

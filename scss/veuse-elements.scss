@@ -50,6 +50,7 @@ $buttonradius:2px;
 @import 'shortcodes/accordion';
 @import 'shortcodes/alerts';
 @import 'shortcodes/buttons';
+@import 'shortcodes/columns';
 @import 'shortcodes/callout';
 @import 'shortcodes/carousel';
 @import 'shortcodes/counter';
@@ -59,12 +60,14 @@ $buttonradius:2px;
 @import 'shortcodes/iconbox';
 @import 'shortcodes/headings';
 @import 'shortcodes/lists';
+@import 'shortcodes/modal';
 @import 'shortcodes/postlist';
 @import 'shortcodes/pricingtable';
 @import 'shortcodes/progressbar';
 @import 'shortcodes/tab';
 @import 'shortcodes/testimonials';
 @import 'shortcodes/verticaltab';
+@import 'shortcodes/box';
 
 
 .panel-grid-cell .panel { margin-bottom: 0px !important; }

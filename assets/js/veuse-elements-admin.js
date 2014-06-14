@@ -1,5 +1,78 @@
-jQuery(document).ready(function($){
+(function ($) {
+	
+	'use strict';
+	
+	$.fn.veuseTestimonialList = function(options) {
+		
+		var defaults = {
+			handle: '.testimonialselector-wrapper'
+		}
+			
+		var options = $.extend({}, defaults,options);
+		
+		
+		var actives,
+			id ;
+			
+		$(options.handle).each(function(){
+			
+			actives = $(this).next('input').val();
+			
+			console.log(actives);
+	
+			var arr = actives.split(',');
+	
+					
+			$(this).find('a[data-testimonial-id]').each(function(){
+			
+				id = $(this).attr('data-testimonial-id');
+			
+				if( jQuery.inArray(id, arr) >= 0 ){
+					$(this).addClass('active');
+				}
+			
+			});	
+			
+			actives = '';
+			arr = '';
+		});
+	
+		
+		$(document).on('click','.testimonialselector-wrapper a', function(){
+			
+			var ids = '';
+			
+			$(this).toggleClass('active');
+			
+			$(this).parent().find('a.active').each(function(){			
+				ids += $(this).attr('data-testimonial-id') + ',';
+			});
+			
+			$(this).parent().next().val(ids);
+			
+			ids = '';
+			return false;
+		});
 
+	
+	}
+	
+	
+	$(document).ready(function(){
+		
+		$(document).veuseTestimonialList();
+		
+	});
+
+
+}( jQuery ));
+
+
+
+jQuery(document).ready(function($){
+		
+		
+	
 	    
 	  /* Admin widget */
 	  
@@ -44,7 +117,7 @@ jQuery(document).ready(function($){
 	
 	/* Pricetable sorting */
 
-	jQuery('.wp-list-table tbody').sortable({
+	jQuery('.testimonial-type-priceitem .wp-list-table tbody').sortable({
 			axis: 'y',
 			handle: '.order-priceitem',
 			placeholder: 'ui-state-highlight',
@@ -53,14 +126,14 @@ jQuery(document).ready(function($){
 				var theOrder = $(this).sortable('toArray');
 	
 				var data = {
-					action: 'veuse_priceitem_update_post_order',
-					postType: $(this).attr('data-post-type'),
+					action: 'veuse_priceitem_update_testimonial_order',
+					testimonialType: $(this).attr('data-testimonial-type'),
 					order: theOrder
 				};
 				
 				//alert(data.order);
 	
-				$.post(ajaxurl, data);
+				$.testimonial(ajaxurl, data);
 			}
 		}).disableSelection();
 	
@@ -142,7 +215,7 @@ jQuery(document).ready(function($){
             	
             	i++;
             	out = '';
-            	out += '<div class="slide-item postbox">';
+            	out += '<div class="slide-item testimonialbox">';
             	out += '<div class="handlediv" title="Click to toggle"><br /></div><h3 class="hndle"><span>Item</span></h3>';
             	out += '<div class="inside clearfix">';
             	out += '<figure id="image_' + i +'_holder" class="slide-item-image">';

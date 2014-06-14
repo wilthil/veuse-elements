@@ -1,0 +1,1 @@
+<a href="<?php echo $btnurl;?>" <?php echo $styles_list;?> class="veuse-button <?php echo $size.' '.$align.' '.$style.' '.$bevel. ' ' . $classes;?>" target="<?php echo $target;?>"><?php echo $icon_str.' '.$text;?></a>

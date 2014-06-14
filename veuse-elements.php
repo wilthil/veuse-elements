@@ -12,17 +12,6 @@ GitHub Plugin URI: https://github.com/veuse/veuse-elements
 */
 
 
-// Setup filters
-/*
-add_filter('wp_editor_widget_content', 'wptexturize');
-add_filter('wp_editor_widget_content', 'convert_smilies');
-add_filter('wp_editor_widget_content', 'convert_chars');
-add_filter('wp_editor_widget_content', 'wpautop');
-add_filter('wp_editor_widget_content', 'shortcode_unautop');
-add_filter('wp_editor_widget_content', 'prepend_attachment');
-add_filter('wp_editor_widget_content', 'do_shortcode', 11);
-*/
-
 class VeuseElements {
 
 	private $pluginURI  = '';
@@ -34,7 +23,7 @@ class VeuseElements {
 		$this->pluginPATH = plugin_dir_path(__FILE__) ;
 		
 		add_action('wp_enqueue_scripts', array(&$this,'veuse_elements_enqueue_styles'), 100);
-		add_action('admin_enqueue_scripts', array(&$this,'veuse_elements_enqueue_admin_script'));
+		add_action('admin_enqueue_scripts', array(&$this,'veuse_elements_enqueue_admin_script'), 100);
 		add_action('plugins_loaded', array(&$this,'veuse_elements_load_textdomain'));
 		add_action('admin_head', array(&$this, 'widgets_admin_page'), 100);		
 		add_action('admin_menu', array(&$this,  'register_menu_page' ),11);
@@ -43,6 +32,9 @@ class VeuseElements {
 		/* Veuse Slider */
 		require $this->pluginPATH . 'includes/veuse-slider.php';	
 		
+		/* Testimonial post-typer */
+		require $this->pluginPATH . 'includes/veuse-testimonial.php';	
+		
 		/* Pricetable */
 		require $this->pluginPATH . 'includes/veuse-pricetable.php';		
 		
@@ -50,31 +42,35 @@ class VeuseElements {
 		require 'shortcodes.php';
 		
 		/* Meta boxes */
+		require_once $this->pluginPATH . 'views/back/meta-panels/testimonial-meta.php';
 		require_once $this->pluginPATH . 'views/back/meta-panels/slider-meta.php';
 		require_once $this->pluginPATH . 'views/back/meta-panels/priceitem-meta.php';
 		
 		/* Include widgets */
-		require 'views/back/widgets/blockquote-widget.php';
-		require 'views/back/widgets/page-widget.php';
-		require 'views/back/widgets/image-widget-2.php';
-		require 'views/back/widgets/callout-widget.php';
-		require 'views/back/widgets/download-widget.php';
-		require 'views/back/widgets/divider-widget.php';		
-		require 'views/back/widgets/heading-widget.php';
-		require 'views/back/widgets/toggle-widget.php';
-		require 'views/back/widgets/tab-widget.php';
-		require 'views/back/widgets/gist-widget.php';
-		require 'views/back/widgets/verticaltab-widget.php';
-		require 'views/back/widgets/alert-widget.php';
-		require 'views/back/widgets/button-widget.php';
-		require 'views/back/widgets/iconbox-widget.php';
-		require 'views/back/widgets/testimonial-widget.php';
-		require 'views/back/widgets/postslider-widget.php';
-		require 'views/back/widgets/posts-widget.php';
-		require 'views/back/widgets/posts-grid-widget.php';
-		require 'views/back/widgets/pricetable-widget.php';
-		require 'views/back/widgets/progressbar-widget.php';
-		require 'views/back/widgets/slider-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/testimonialslider-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/blockquote-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/page-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/image-widget-2.php';
+		require $this->pluginPATH . 'views/back/widgets/callout-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/download-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/divider-widget.php';		
+		require $this->pluginPATH . 'views/back/widgets/heading-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/toggle-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/tab-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/gist-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/modal-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/verticaltab-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/alert-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/button-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/iconbox-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/testimonial-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/postslider-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/posts-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/posts-grid-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/pricetable-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/progressbar-widget.php';
+		require $this->pluginPATH . 'views/back/widgets/slider-widget.php';
+		
 		
 		/* Add theme support */
 		add_post_type_support('page', 'excerpt'); // Enable excerpts on pages
@@ -93,9 +89,9 @@ class VeuseElements {
 	     add_submenu_page( 'veuse-elements' , 'Slideshows', 'Slideshows', 'edit_posts', 'edit.php?post_type=veuse_slider', '');
 		 add_submenu_page( 'veuse-elements' , 'Pricetables', 'Pricetables', 'edit_posts', 'edit-tags.php?taxonomy=pricetable', '');
 		 add_submenu_page( 'veuse-elements' , 'Price items', 'Price items', 'edit_posts', 'edit.php?post_type=priceitem', '');
+		 add_submenu_page( 'veuse-elements' , 'Testimonials', 'Testimonials', 'edit_posts', 'edit.php?post_type=veuse_testimonial', '');
 	     add_submenu_page( 'veuse-elements' , 'Documentation', 'Documentation', 'edit_posts', 'veuse-elements-documentation', array(&$this, 'add_documentation_page'));
 	     
-	      //add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
 	}
 	
 	// highlight the proper top level menu
@@ -201,16 +197,9 @@ class VeuseElements {
 			wp_enqueue_media();
 		}
 				
-        wp_enqueue_script('media-upload');
+        //wp_enqueue_script('media-upload');
 		
 		wp_enqueue_script('veuse_elements-admin-js', $this->pluginURI  . 'assets/js/veuse-elements-admin.js', array('jquery'), '', true);
-		
-		
-		//wp_register_script('wp-editor-widget-js', $this->pluginURI  . 'assets/js/parallax-widget.js', array('jquery'), '', true);
-		//wp_enqueue_script('wp-editor-widget-js');
-		
-		
-		
 		
         
         
@@ -273,7 +262,7 @@ function veuse_uikit_locate_part($file) {
 	if ( file_exists( get_stylesheet_directory().'/veuse-elements/'. $file .'.php'))
 	   	$filepath = get_stylesheet_directory().'/veuse-elements/'. $file .'.php';
 	
-	if ( file_exists( get_stylesheet_directory().'/'. $file .'.php'))
+	elseif ( file_exists( get_stylesheet_directory().'/'. $file .'.php'))
 	   	$filepath = get_stylesheet_directory().'/'. $file .'.php';
 	
 	else
@@ -283,13 +272,15 @@ function veuse_uikit_locate_part($file) {
 }
 
 
+
+
 /* Insert retina image */
 
 if(!function_exists('veuse_retina_interchange_image')){
 
 	function veuse_retina_interchange_image($img_url, $width, $height, $crop){
 
-		$imagepath = '<img src="'. mr_image_resize($img_url, $width, $height, $crop, 'c', false) .'" data-interchange="['. mr_image_resize($img_url, $width, $height, $crop, 'c', true) .', (retina)]" alt=""/>';
+		$imagepath = '<img src="'. mr_image_resize($img_url, $width, $height, $crop, 'c', false) .'" data-interchange="['. mr_image_resize($img_url, $width, $height, $crop, 'c', true) .', (retina)]" alt="" />';
 	
 		return $imagepath;
 	

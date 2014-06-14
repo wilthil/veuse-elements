@@ -4,4 +4,34 @@
 
 	margin-bottom: 0 !important; 
 	
+	
 	}
+	
+.veuse-heading {
+
+	margin: 0;
+	line-height: 1em;
+	
+	&.left { text-align: left; }
+	&.center { text-align: center; }
+	&.right { text-align: right; }
+	
+	&.uppercase-text { text-transform: uppercase; }
+	
+	&.sidelines {
+				
+		position: relative;
+		
+		
+		
+		&:before,
+		&:after { width:50px; height: 1px; border-top:1px solid rgba(0, 0, 0, 0.1);  top:50%; content:''; display: inline-block; margin-bottom: 4px; }
+		
+		&:before { margin-right:15px;}
+		&:after { margin-left:15px;}
+		
+		&.left:before { display: none;}
+		&.right:after { display: none;}
+		
+	}
+}
