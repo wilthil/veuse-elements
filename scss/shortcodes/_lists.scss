@@ -1,4 +1,17 @@
 .veuse-list {
+
+	/* Has icon ? */
+	&.icon-list ul {
+		
+		&:before { content:'' !important; display: none !important; }
+		 
+		li:before {
+				
+				display: inline-block;
+				font-family: FontAwesome;
+				margin-right: 6px;
+		}		
+	}
 	
 	
 	> ul {
@@ -6,6 +19,8 @@
 		list-style: none !important;
 		margin: 0 0 20px;
 		padding: 0;
+		
+		
 	
 		li {
 			padding:2px 0;
@@ -50,14 +65,7 @@
 	&:vertical ul li { display: block;}
 	&.horisontal ul li { display: inline-block; margin-right: 10px; }
 	
-	/* Has icon ? */
-	&.icon-list ul li:before {
-			
-		display: inline-block;
-		font-family: FontAwesome;
-		margin-right: 6px;
-			
-	}
+	
 	
 	
 	/* Color of icon */
@@ -79,19 +87,23 @@
 	&.darkbrown ul li:before { color: $darkbrown;}
 	&.brown ul li:before { color: $brown;}
 		
-	/* Type of icon */
-	&.angle-right ul li:before { content:'\f105'; }
-	&.angle-double-right ul li:before { content:'\f101'; }
-	&.circle-o ul li:before { content:'\f10c'; }
-	&.dot-circle-o ul li:before { content:'\f192'; }
-	&.arrow-circle-right ul li:before { content:'\f0a9'; }	
-	&.long-arrow-right ul li:before { content:'\f178'; }
-	&.chevron-right ul li:before { content:'\f054'; }	
-	&.chevron-circle-right ul li:before { content:'\f138'; }
-	&.arrow-right ul li:before { content:'\f061'; }	
-	&.check ul li:before { content:'\f00c'; }	
-	&.check-circle ul li:before { content:'\f058'; }	
+	/* Type of icon 
+		
+		Need to add more icons to this...
+		
 	
+	&.fa-angle-right ul li:before { content:$fa-var-angle-right; }
+	&.fa-angle-double-right ul li:before { content:'\f101'; }
+	&.fa-circle-o ul li:before { content:'\f10c'; }
+	&.fa-dot-circle-o ul li:before { content:'\f192'; }
+	&.fa-arrow-circle-right ul li:before { content:'\f0a9'; }	
+	&.fa-long-arrow-right ul li:before { content:'\f178'; }
+	&.fa-chevron-right ul li:before { content:'\f054'; }	
+	&.fa-chevron-circle-right ul li:before { content:'\f138'; }
+	&.fa-arrow-right ul li:before { content:'\f061'; }	
+	&.fa-check ul li:before { content:'\f00c'; }	
+	&.fa-check-circle ul li:before { content:'\f058'; }	
+	*/
 	
 	
 	

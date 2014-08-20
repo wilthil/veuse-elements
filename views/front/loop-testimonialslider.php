@@ -48,12 +48,13 @@ jQuery(document).ready(function(){
 	
 	jQuery(".veuse-testimonialslider").owlCarousel({
 	 		
-	      navigation : false,
+	      navigation : true,
 	      slideSpeed : 300,
 	      paginationSpeed : 400,
 	      singleItem:true,
-	      autoHeight : false,
-		  transitionStyle:"fade"
+	      autoHeight : true,
+		  transitionStyle:"fade",
+		  navigationText : false
 	});
 });
 	

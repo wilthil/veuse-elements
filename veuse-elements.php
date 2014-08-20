@@ -71,6 +71,8 @@ class VeuseElements {
 		require $this->pluginPATH . 'views/back/widgets/progressbar-widget.php';
 		require $this->pluginPATH . 'views/back/widgets/slider-widget.php';
 		
+		/* Include Virtual Composer compatibility  */
+		require $this->pluginPATH . 'views/back/virtual-composer/compat-virtual-composer.php';
 		
 		/* Add theme support */
 		add_post_type_support('page', 'excerpt'); // Enable excerpts on pages

@@ -1,4 +1,4 @@
-<a href="#" data-veuse-modal><?php echo $title;?></a>
+<a href="#" data-veuse-modal target=""><?php echo $title;?></a>
 <div class="veuse-modal">
 	<div class="veuse-modal-inner">
 	<a href="#" class="veuse-modal-close"><span>Close</span></a>

@@ -6,12 +6,9 @@
 $img_url = wp_get_attachment_url( get_post_thumbnail_id());
 $fallback_img_url = get_stylesheet_directory_uri().'/images/fallback-featured.jpg';
 ?>
-			
-				<?php //echo veuse_retina_interchange_image( $img_url, $width, $height, true); ?>
-	<li <?php post_class();?>>
-	
-	
-
+		<li <?php post_class();?>>
+		
+		<?php //echo veuse_retina_interchange_image( $img_url, $width, $height, true); ?>
 						
 		<h4><a href="<?php the_permalink();?>"><?php the_title();?></a></h4>
 		<ul class="veuse-postlist-meta">

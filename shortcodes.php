@@ -1,10 +1,6 @@
 <?php 
 
-
-
-
 function veuse_elements_register_shortcodes(){
-	
 	
 	
 	/* Testimonial slider
@@ -32,6 +28,8 @@ function veuse_elements_register_shortcodes(){
 	add_shortcode("veuse_testimonialslider", "veuse_testimonialslider");
 	
 	
+		
+	
 	
 	/* Modal box
 	================================================  */
@@ -56,6 +54,9 @@ function veuse_elements_register_shortcodes(){
 	}
 	
 	add_shortcode("veuse_modal", "veuse_modal");
+	
+	
+	
 	
 		
 	/* Box / containers
@@ -165,7 +166,7 @@ function veuse_elements_register_shortcodes(){
 	add_shortcode("veuse_slider", "veuse_slider");
 	
 	
-	/* Veuse Slider
+	/* Veuse Pricetable
 	================================================  */
 	if(!function_exists('veuse_pricetable')){
 		
@@ -257,11 +258,7 @@ function veuse_elements_register_shortcodes(){
 				$output .= '</div>';
 				
 			}
-			
-					
-				
-			
-			
+						
 			wp_reset_postdata();
 		
 			
@@ -275,6 +272,8 @@ function veuse_elements_register_shortcodes(){
 	
 	
 	add_shortcode('veuse_pricetable','veuse_pricetable');
+	
+	
 	
 	/* Alerts
 	================================================  */
@@ -293,6 +292,8 @@ function veuse_elements_register_shortcodes(){
 	}
 
 	add_shortcode("veuse_alert", "veuse_alert");
+	
+	
 	
 	/* Carousel
 	================================================  */
@@ -378,21 +379,21 @@ function veuse_elements_register_shortcodes(){
 	if(!function_exists('veuse_button')){
 		function veuse_button( $atts, $content = null ) {
 			extract(shortcode_atts(array(
-					'href' 		=> '#',
-					'text' 		=> 'Button text',
-					'size' 		=> 'small',
-					'color' 	=> '',
-					'style' 	=> 'primary',
-					'align' 	=> '',
-					'target' 	=> '_self',
-					'width' 	=> '',
-					'icon' 		=> '',
-					'bevel' 		=> '',
-					'background_color'	=> '',
-					'border_radius'	=> '',
-					'border_width'	=> '',
-					'border_color'	=> '',
-					'classes'		=> '',
+				'href' 		=> '#',
+				'text' 		=> 'Button text',
+				'size' 		=> 'small',
+				'color' 	=> '',
+				'style' 	=> 'primary',
+				'align' 	=> '',
+				'target' 	=> '_self',
+				'width' 	=> '',
+				'icon' 		=> '',
+				'bevel' 		=> '',
+				'background_color'	=> '',
+				'border_radius'	=> '',
+				'border_width'	=> '',
+				'border_color'	=> '',
+				'classes'		=> '',
 		    ), $atts));
 		    
 		    
@@ -656,8 +657,8 @@ function veuse_elements_register_shortcodes(){
 		if(!empty($custom_imagesize)){
 			
 			$custom_imagesize = str_replace(' ','',$custom_imagesize); // Remove whitespace
-			$string_parts = explode("*", $custom_imagesize); 
-	
+			$string_parts = explode("x", $custom_imagesize); 
+				
 			$custom_imagesize = array();
 			$custom_imagesize['width'] = $string_parts[0];
 			$custom_imagesize['height'] = $string_parts[1];
@@ -721,17 +722,15 @@ function veuse_elements_register_shortcodes(){
 			'title' 		=> '',
 			'icon'			=> '',
 			'style'			=> '',
-			'color'			=> '',
-			'border'		=> 'false',
-			'direction'		=> 'vertical',			
+			'direction'		=> 'vertical'		
 			
 			), $atts));
 			
-			!empty($border) ? $borderclass="border" : $borderclass='';
+
 			
-			if(!empty($icon)) $iconstr = 'icon-list '.$icon; else $iconstr = '';
+			if(!empty($icon)) $iconstr = 'icon-list icon-list-fa-'.$icon; else $iconstr = '';
 			
-			$out = '<div class="veuse-list '.$iconstr.' '.$color.' '.$direction.' '.$borderclass .' style-'.$style.'">'.do_shortcode($content).'</div>';
+			$out = '<div class="veuse-list '.$iconstr.' '.!empty($color).' '.$direction.' '.!empty($borderclass).' '.$style.'">'.do_shortcode($content).'</div>';
 					
 			return $out;
 
@@ -843,7 +842,7 @@ function veuse_elements_register_shortcodes(){
 		
 		extract(shortcode_atts(array(
 			'categories'	=> '',
-			'perpage'		=> '',
+			'perpage'		=> '10',
 			'order'			=> 'DESC',
 			'orderby'		=> 'title',
 			'width'			=> 'width',
@@ -1078,13 +1077,17 @@ function veuse_elements_register_shortcodes(){
 		extract(shortcode_atts(array(
 			'icon' 			=> '',
 			'title'			=> '',
+			'heading'		=> 'h4',
+			'heading_color'	=> '',
 			'text'			=> '',
 			'href'			=> '',
 			'buttontext'	=> '',
 			'background'	=> '',
 			'color'			=> '',
 			'style'			=> '',
-			'bordercolor'	=> ''
+			'bordercolor'	=> '',
+			'borderstyle'	=> '',
+			'borderwidth'	=> ''
 			
 			), $atts));
 		    
